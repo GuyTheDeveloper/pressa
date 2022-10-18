@@ -27,7 +27,7 @@ const PUT = async (req, res) => {
     let subcategory = await model.PUT(req.params, req.body);
     res.status(201).json({
       status: 201,
-      message: "subcategory changed",
+      message: "subcategory successfully changed",
       data: subcategory,
     });
   } catch (error) {
@@ -40,7 +40,7 @@ const DELETE = async (req, res) => {
     let subcategory = await model.DELETE(req.params);
     res.status(201).json({
       status: 201,
-      message: "subcategory deleted",
+      message: "subcategory deleted successfully",
       data: subcategory,
     });
   } catch (error) {

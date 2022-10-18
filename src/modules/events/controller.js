@@ -38,7 +38,7 @@ const DELETEREJECTED = async (req, res) => {
     let event = await model.DELETE(req.params);
     res.status(201).json({
       status: 201,
-      message: "rejected",
+      message: "Rejected",
       data: event,
     });
   } catch (error) {

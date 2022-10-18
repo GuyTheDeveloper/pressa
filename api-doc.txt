@@ -1,0 +1,142 @@
+                    Assalomu Aleykum Aziz kanalimiz muxlislari 😅hazil
+
+                    PRESSA!
+1.Categories  {
+    GET: /categories, /categories/:categoryId,
+
+    Note that u need to login as admin)
+    POST: /categories,
+     body ---- {
+        category_name : "...."
+    }     
+     response if data successfully added ----> {
+        status: 201,
+        message: "New category created",
+        data: "(created category)"
+    }
+
+    PUT: /categories/:categoryId 
+    id will be taken from params like ----- /categories/1
+    body ------ {
+        category_name: "...."
+    }
+     response if category_name successfully changed ----> {
+        status: 200,
+        message: "category_name changed successfully"
+        data: "(changed category)"
+     }
+
+    DELETE: /categories/:categoryId
+    id will be taken from params
+    note that it will not be deleted fully from database , its just a soft delete,but who cares 😁?
+    body ------ {}
+     response if category successfully deleted ----> {
+        status: 200,
+        message: "category deleted successfully"
+        data: "(deleted category)"
+     }   
+}
+
+2.Subcategories  {
+    GET: /subcategories, /subcategories/:subcategoryId
+
+    Note that u need to login as admin:)
+    POST: /subcategories
+     body ---- {
+        category_id : Int, example (1,2,3,4 ...)
+        subcategory_name : "..."
+    }     
+     response if data successfully created ----> {
+        status: 201,
+        message: "subcategory created",
+        data: "created subcategory",
+    }
+
+    PUT: /subcategories/:subcategoryId 
+    id will be taken from params like ----- /subcategories/1
+    body ------ {
+        category_id: "....",
+        subcategory_name: "..."
+    }
+     response if category_name successfully changed ----> {
+        status: 201,
+        message: "subcategory successfully changed"
+        data: "(changed subcategory)"
+     }
+
+    DELETE: /subcategories/:subcategoryId
+    id will be taken from params
+    note that it will not be deleted fully from database , its just a soft delete,but who cares 😁?
+    body ------ {}
+     response if category successfully deleted ----> {
+        status: 200,
+        message: "subcategory deleted successfully"
+        data: "(deleted subcategory)"
+     }       
+
+}
+
+
+3.Events   {
+
+    GET: /events/:eventId, 
+        note that without status you can't get them there are 3 statutes here: pending,accepted,rejected
+        exapmle ------ /events?status=pending
+        /events?status=...&page=Int&limit=Int pagination 
+        filter by date 
+            variant 1:
+                /events?status=...&event_date=2022/17/05 fake datalar chalkashib shunday ketgan, 
+            variant 2: 
+                /events?status=...&event_date=2022-17-05
+        /events?status=...&subcategory=Int
+        /events?status=...&type=online or offline
+        /events?status=...&username=String is the next feature
+        /events?status=...&search=String will search by description,(title of event)
+        /
+    
+    POST: /events
+    Note that event status by default will be 'pending' if admins accepts it it will be 'accepted' if reject it then 'rejected'
+     body ---- {
+        event_date: Date (y-m-d,y/m/d),
+        event_time: Time ('15:00'),
+        category_id: Int,
+        subcategory_id: Int,
+        event_type: String ('online' || 'offline'),
+        link: String,
+        user_type String ('jismoniy shaxs' || 'yuridik shaxs'),
+        user_fullname String,
+        user_profession String,
+        user_contact String,
+        user_spare_contact Sring,
+        user_legal_name = (user_type === 'yuridik shaxs' ? String : null),
+        description Sring,
+        image: ('gif' || 'png' || 'jpe?g'),
+        event_text String,
+    }     
+     response if data successfully created ----> {
+        status: 201,
+        message: "we will check it",
+        data: "created event",
+    }
+
+    Note! User cannot change nothing from events, once they send it it will no be accessible to get it back
+    This put only for admin to accept it
+    PUT: /events/:eventId
+        body ---- {
+            status:'accepted'
+        }
+        body can be empty if you want, just put fetch will change status no matter what
+         response if event accepted ------> {
+            status: 201,
+            message: "Accepted",
+            data: ("accepted event")
+         }
+
+    DELETE: /events/:eventId
+            body --- can be empty 
+            response if event rejected ------> {
+                status:201,
+                message: "Rejected",
+                data: ("soft deleted event")
+            }
+}
